@@ -1,7 +1,7 @@
 pragma solidity >=0.4.24;
 
 //Importing openzeppelin-solidity ERC-721 implemented Standard
-import "../node_modules/openzeppelin-solidity/contracts/token/ERC721/ERC721.sol";
+import "../app/node_modules/openzeppelin-solidity/contracts/token/ERC721/ERC721.sol";
 
 // StarNotary Contract declaration inheritance the ERC721 openzeppelin implementation
 contract StarNotary is ERC721 {
@@ -14,7 +14,36 @@ contract StarNotary is ERC721 {
     // Implement Task 1 Add a name and symbol properties
     // name: Is a short name to your token
     // symbol: Is a short string like 'USD' -> 'American Dollar'
-    
+    // Token name
+    string private _name = "Udacity Excercise Part Two";
+
+    // Token symbol
+    string private _symbol = "UEPT";
+
+    //uint public INITIAL_SUPPLY = 10000 * (10 ** decimals); 
+    // constructor(string memory name_, string memory symbol_) {
+    //     _name = name_;
+    //     _symbol = symbol_;
+    // }
+    // constructor() {
+    //     name = "Udacity Excercise Part Two";
+    //     symbol = "UEPT";
+    // }
+
+
+   function name() public view returns (string memory) {
+        return _name;
+    }
+
+    function symbol() public view returns (string memory) {
+        return _symbol;
+    }
+
+    // constructor() public {
+    //     totalSuply = INITIAL_SUPPLY;
+    //     symbol = "UEPT";
+    //     name = "Udacity Excercise Part Two";
+    // }
 
     // mapping the Star with the Owner Address
     mapping(uint256 => Star) public tokenIdToStarInfo;
@@ -23,8 +52,8 @@ contract StarNotary is ERC721 {
 
     
     // Create Star using the Struct
-    function createStar(string memory _name, uint256 _tokenId) public { // Passing the name and tokenId as a parameters
-        Star memory newStar = Star(_name); // Star is an struct so we are creating a new Star
+    function createStar(string memory _starName, uint256 _tokenId) public { // Passing the name and tokenId as a parameters
+        Star memory newStar = Star(_starName); // Star is an struct so we are creating a new Star
         tokenIdToStarInfo[_tokenId] = newStar; // Creating in memory the Star -> tokenId mapping
         _mint(msg.sender, _tokenId); // _mint assign the the star with _tokenId to the sender address (ownership)
     }
@@ -57,20 +86,30 @@ contract StarNotary is ERC721 {
     // Implement Task 1 lookUptokenIdToStarInfo
     function lookUptokenIdToStarInfo (uint _tokenId) public view returns (string memory) {
         //1. You should return the Star saved in tokenIdToStarInfo mapping
+        Star memory starInfo = tokenIdToStarInfo[_tokenId];
+        return starInfo.name;
     }
 
     // Implement Task 1 Exchange Stars function
     function exchangeStars(uint256 _tokenId1, uint256 _tokenId2) public {
         //1. Passing to star tokenId you will need to check if the owner of _tokenId1 or _tokenId2 is the sender
+        require(ownerOf(_tokenId1) == msg.sender, "You can't exchange the Star you don't owned");
+        require(ownerOf(_tokenId2) != msg.sender, "You can't exchange the Star you owned");
         //2. You don't have to check for the price of the token (star)
         //3. Get the owner of the two tokens (ownerOf(_tokenId1), ownerOf(_tokenId2)
+        address ownerAddress1 = ownerOf(_tokenId1);
+        address ownerAddress2 = ownerOf(_tokenId2);
         //4. Use _transferFrom function to exchange the tokens.
+         _transferFrom(msg.sender, ownerAddress2, _tokenId1);
+         _transferFrom(ownerAddress2, msg.sender, _tokenId2); 
     }
 
     // Implement Task 1 Transfer Stars
     function transferStar(address _to1, uint256 _tokenId) public {
         //1. Check if the sender is the ownerOf(_tokenId)
+        require(ownerOf(_tokenId) == msg.sender, "You can't transfer the Star you don't owned");
         //2. Use the transferFrom(from, to, tokenId); function to transfer the Star
+         _transferFrom(msg.sender, _to1 , _tokenId); 
     }
 
 }
