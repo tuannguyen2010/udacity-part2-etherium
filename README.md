@@ -138,10 +138,10 @@ compilers: {
 Do not use the [Old depreacted zipped starter code](https://s3.amazonaws.com/video.udacity-data.com/topher/2019/January/5c51c4c0_project-5-starter-code/project-5-starter-code.zip)
 
 
-###DEPLOYED CONTRACT
-Truffle version: "v5.5.4"
-OpenZeppelin version: "openzeppelin-solidity": "2.3",
-ERC-721 Token Name: "Udacity Excercise Part Two"
-ERC-721 Token Symbol: "UEPT"
-“Token Address” on the Rinkeby Network: "0x714e4588E41CCA5aabEbc16572A4CEa526604449"
-Transaction hash: "0xec97e17d578600e29ce2146c90da5663e9bf95a8c297cf9ac6d5488ba1b1a5fa"
+## DEPLOYED CONTRACT
+1. Truffle version: "v5.5.4"
+2. OpenZeppelin version: "openzeppelin-solidity": "2.3",
+3. ERC-721 Token Name: "Udacity Excercise Part Two"
+4. ERC-721 Token Symbol: "UEPT"
+5. “Token Address” on the Rinkeby Network: "0x714e4588E41CCA5aabEbc16572A4CEa526604449"
+6. Transaction hash: "0xec97e17d578600e29ce2146c90da5663e9bf95a8c297cf9ac6d5488ba1b1a5fa"
